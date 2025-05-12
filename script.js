@@ -30,7 +30,6 @@ button.addEventListener('click', () => {
   blue: false,
   sequence: ['red', 'yellow', 'green', 'cyan', 'white', 'purple', 'blue'],
   markedColors: [],
-  prevActiveColor: null
 };
 
 // DOM Elements
@@ -52,7 +51,7 @@ const dots = {
 function updateDots() {
   // Reset all dots to inactive
   for (const color in dots) {
-      dots[color].style.backgroundColor = '#333';
+      dots[color].style.backgroundColor = '#000';
   }
 
   // Activate dots based on current RGB state
