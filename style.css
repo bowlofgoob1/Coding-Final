@@ -1,0 +1,45 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #012B2B;
+    font-family: 'Courier New', monospace;
+    color: #f3f3f3;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .container {
+    text-align: center;
+  }
+  
+  button {
+    padding: 1em 2em;
+    background-color: #f7c59f;
+    border: none;
+    color: #012B2B;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #f3a35c;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  #loadingText {
+    margin-top: 20px;
+    font-size: 1.5rem;
+    animation: blink 2s infinite;
+  }
+  /*built in css animation for blinking text*/
+  @keyframes blink {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+  }
+  
