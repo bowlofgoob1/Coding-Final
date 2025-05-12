@@ -20,3 +20,67 @@ button.addEventListener('click', () => {
     loadingText.textContent = 'Why are you still here?';
   }, 6000);
 });
+
+
+// Dots -------------------------------------------------------
+// Game state
+ const state = {
+  red: false,
+  green: false,
+  blue: false,
+  sequence: ['red', 'yellow', 'green', 'cyan', 'white', 'purple', 'blue'],
+  markedColors: [],
+  prevActiveColor: null
+};
+
+// DOM Elements
+const redButton = document.getElementById('red-button');
+const greenButton = document.getElementById('green-button');
+const blueButton = document.getElementById('blue-button');
+
+// Initialize dots
+const dots = {
+  red: document.getElementById('red-dot'),
+  yellow: document.getElementById('yellow-dot'),
+  green: document.getElementById('green-dot'),
+  cyan: document.getElementById('cyan-dot'),
+  white: document.getElementById('white-dot'),
+  purple: document.getElementById('purple-dot'),
+  blue: document.getElementById('blue-dot')
+};
+
+function updateDots() {
+  // Reset all dots to inactive
+  for (const color in dots) {
+      dots[color].style.backgroundColor = '#333';
+  }
+
+  // Activate dots based on current RGB state
+  if (state.red) {
+      dots.red.style.backgroundColor = 'red';
+  }
+  
+  if (state.green) {
+      dots.green.style.backgroundColor = 'green';
+  }
+  
+  if (state.blue) {
+      dots.blue.style.backgroundColor = 'blue';
+  }
+  
+  if (state.red && state.green) {
+      dots.yellow.style.backgroundColor = 'yellow';
+  }
+  
+  if (state.green && state.blue) {
+      dots.cyan.style.backgroundColor = 'cyan';
+  }
+  
+  if (state.red && state.blue) {
+      dots.purple.style.backgroundColor = 'purple';
+  }
+  
+  if (state.red && state.green && state.blue) {
+      dots.white.style.backgroundColor = 'white';
+  }
+}
