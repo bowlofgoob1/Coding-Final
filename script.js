@@ -30,56 +30,70 @@ button.addEventListener('click', () => {
   blue: false,
   sequence: ['red', 'yellow', 'green', 'cyan', 'white', 'purple', 'blue'],
   markedColors: [],
+  prevActiveColor: null
 };
 
-// DOM Elements
+// Get references to important HTML elements
 const redButton = document.getElementById('red-button');
 const greenButton = document.getElementById('green-button');
 const blueButton = document.getElementById('blue-button');
+const message = document.getElementById('message');
+const redBulb = document.getElementById('red-bulb');
+const greenBulb = document.getElementById('green-bulb');
+const blueBulb = document.getElementById('blue-bulb');
 
-// Initialize dots
+// Store references to all the color dots
 const dots = {
-  red: document.getElementById('red-dot'),
-  yellow: document.getElementById('yellow-dot'),
-  green: document.getElementById('green-dot'),
-  cyan: document.getElementById('cyan-dot'),
-  white: document.getElementById('white-dot'),
-  purple: document.getElementById('purple-dot'),
-  blue: document.getElementById('blue-dot')
+    red: document.getElementById('red-dot'),
+    yellow: document.getElementById('yellow-dot'),
+    green: document.getElementById('green-dot'),
+    cyan: document.getElementById('cyan-dot'),
+    white: document.getElementById('white-dot'),
+    purple: document.getElementById('purple-dot'),
+    blue: document.getElementById('blue-dot')
 };
 
-function updateDots() {
-  // Reset all dots to inactive
-  for (const color in dots) {
-      dots[color].style.backgroundColor = '#000';
-  }
+// Update the RGB button visuals based on current state
+function updateButtons() {
+    // Toggle active class based on state
+    redBulb.classList.toggle('active', state.red);
+    greenBulb.classList.toggle('active', state.green);
+    blueBulb.classList.toggle('active', state.blue);
+}
 
-  // Activate dots based on current RGB state
-  if (state.red) {
-      dots.red.style.backgroundColor = 'red';
+function getActiveColors() {
+  // Start with an empty list
+  const activeColors = [];
+  
+  // Add individual RGB colors if active
+  if (state.red) activeColors.push('red');
+  if (state.green) activeColors.push('green');
+  if (state.blue) activeColors.push('blue');
+  
+  // Add mixed colors based on combinations
+  if (state.red && state.green) activeColors.push('yellow');
+  if (state.green && state.blue) activeColors.push('cyan');
+  if (state.red && state.blue) activeColors.push('purple');
+  if (state.red && state.green && state.blue) activeColors.push('white');
+  
+  return activeColors;
+}
+
+function updateDots() {
+  // First reset all dots to inactive
+  for (const color in dots) {
+      dots[color].style.backgroundColor = '#333';
   }
   
-  if (state.green) {
-      dots.green.style.backgroundColor = 'green';
-  }
-  
-  if (state.blue) {
-      dots.blue.style.backgroundColor = 'blue';
-  }
-  
-  if (state.red && state.green) {
-      dots.yellow.style.backgroundColor = 'yellow';
-  }
-  
-  if (state.green && state.blue) {
-      dots.cyan.style.backgroundColor = 'cyan';
-  }
-  
-  if (state.red && state.blue) {
-      dots.purple.style.backgroundColor = 'purple';
-  }
-  
-  if (state.red && state.green && state.blue) {
-      dots.white.style.backgroundColor = 'white';
-  }
+  // Get all active colors and set their dots
+  const activeColors = getActiveColors();
+  activeColors.forEach(color => {
+      dots[color].style.backgroundColor = color;
+  });
+}
+
+// Update all the visuals
+function updateDisplay() {
+  updateButtons();
+  updateDots();
 }
