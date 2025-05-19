@@ -1,5 +1,5 @@
 // Get references to the button and the loading text elements
-const button = document.getElementById('startButton');
+/*const button = document.getElementById('startButton');
 const loadingText = document.getElementById('loadingText');
 
 // Add a click event listener to the button
@@ -20,7 +20,7 @@ button.addEventListener('click', () => {
     loadingText.textContent = 'Why are you still here?';
   }, 6000);
 });
-
+*/
 
 // Dots -------------------------------------------------------
 // Game state
@@ -97,3 +97,31 @@ function updateDisplay() {
   updateButtons();
   updateDots();
 }
+
+// When red button is clicked
+redButton.addEventListener('click', () => {
+  state.red = !state.red;     // Toggle red on/off
+  updateDisplay();            // Update the visuals
+  checkColorChange();         // Check for sequence marking
+});
+
+// When green button is clicked
+greenButton.addEventListener('click', () => {
+  state.green = !state.green; // Toggle green on/off
+  updateDisplay();            // Update the visuals
+  checkColorChange();         // Check for sequence marking
+});
+
+// When blue button is clicked
+blueButton.addEventListener('click', () => {
+  state.blue = !state.blue;   // Toggle blue on/off
+  updateDisplay();            // Update the visuals
+  checkColorChange();         // Check for sequence marking
+});
+
+// Double click anywhere to reset
+document.addEventListener('dblclick', resetGame);
+
+// Initialize the game
+updateDisplay();
+
