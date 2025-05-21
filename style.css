@@ -11,4 +11,160 @@ body {
     font-size: 16px;
     cursor: pointer;
   }
+  body {
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
   
+  .container {
+    text-align: center;
+  }
+  
+  button {
+    padding: 1em 2em;
+    background-color: #f7c59f;
+    border: none;
+    color: #012B2B;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #f3a35c;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  #loadingText {
+    margin-top: 20px;
+    font-size: 1.5rem;
+    animation: blink 2s infinite;
+  }
+  /*built in css animation for blinking text*/
+  @keyframes blink {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+  }
+  
+
+  /* ---------------------------------- */
+  /* Basic page setup */
+
+.game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+}
+
+/* Color dots that show the sequence */
+.color-dots {
+    display: flex;
+    gap: 15px;
+}
+
+.color-dot {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%; /* Makes the dot circular */
+    background-color: #333; /* Default dark color */
+    position: relative;
+}
+
+/* The white mark that appears above each dot when selected */
+.mark {
+    width: 2px;
+    height: 0; /* Starts with no height */
+    background-color: white;
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%); /* Center the mark */
+    transition: height 0.3s ease; /* Smooth animation */
+}
+
+/* The three RGB toggle buttons */
+.buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.button {
+    width: 70px;
+    height: 70px;
+    background-color: #333;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+/* Button press effect */
+.button:active {
+    transform: scale(0.95);
+}
+
+/* Color bulbs inside buttons */
+.bulb {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    opacity: 0.2;
+    transition: opacity 0.3s ease;
+}
+
+/* Active state for color bulbs */
+.active {
+    opacity: 1;
+    box-shadow: 0 0 15px currentColor; /* Glow effect */
+}
+
+/* Game feedback message */
+.message {
+    color: white;
+    font-size: 20px;
+    height: 24px;
+    text-align: center;
+}
+
+/* Background glow effects */
+.glow {
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.2;
+    z-index: -1; /* Behind everything else */
+}
+
+.red-glow {
+    bottom: -100px;
+    left: 0;
+    background-color: red;
+}
+
+.green-glow {
+    bottom: -100px;
+    right: 0;
+    background-color: green;
+}
+
+.blue-glow {
+    top: 0;
+    left: 0;
+    background-color: blue;
+}
+
+

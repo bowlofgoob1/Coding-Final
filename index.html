@@ -2,15 +2,45 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Basic Setup</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Liminal UI</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <h1>Hello, world!</h1>
-  <button id="clickMe">Click Me</button>
+    <div class="game-container">
+        <!-- Color dots represent the sequence to be marked -->
+        <div class="color-dots">
+            <div class="color-dot" id="red-dot"><div class="mark"></div></div>
+            <div class="color-dot" id="yellow-dot"><div class="mark"></div></div>
+            <div class="color-dot" id="green-dot"><div class="mark"></div></div>
+            <div class="color-dot" id="cyan-dot"><div class="mark"></div></div>
+            <div class="color-dot" id="white-dot"><div class="mark"></div></div>
+            <div class="color-dot" id="purple-dot"><div class="mark"></div></div>
+            <div class="color-dot" id="blue-dot"><div class="mark"></div></div>
+        </div>
 
+        <!-- RGB toggle buttons -->
+        <div class="buttons">
+            <div class="button" id="red-button">
+                <div class="bulb" id="red-bulb" style="background-color: red;"></div>
+            </div>
+            <div class="button" id="green-button">
+                <div class="bulb" id="green-bulb" style="background-color: green;"></div>
+            </div>
+            <div class="button" id="blue-button">
+                <div class="bulb" id="blue-bulb" style="background-color: blue;"></div>
+            </div>
+        </div>
+
+        <!-- Game status message -->
+        <div class="message" id="message"></div>
+
+        <!-- Show sequence order button -->
+        <button id="show-order-button">Show Order</button>
+    </div>
   <script src="script.js"></script>
 </body>
 </html>
+
+
