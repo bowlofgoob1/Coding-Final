@@ -105,7 +105,7 @@ function updateTopRowDot() {
 
     // update the message depending on whether we're done or not
     message.textContent = state.markedColors.length === state.sequence.length
-      ? "congratulations?"
+      ? "ok"
       : "";
   } else {
     // if it's the wrong color, tell the user
