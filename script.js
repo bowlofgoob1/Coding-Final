@@ -45,25 +45,23 @@ function updateButtons() {
 }
 
 function getActiveColors() {
-  const activeColors = [];
-  if (state.red) activeColors.push('red');
-  if (state.green) activeColors.push('green');
-  if (state.blue) activeColors.push('blue');
-  if (state.red && state.green) activeColors.push('yellow');
-  if (state.green && state.blue) activeColors.push('cyan');
-  if (state.red && state.blue) activeColors.push('purple');
-  if (state.red && state.green && state.blue) activeColors.push('white');
-  return activeColors;
+  const active = [];
+  if (state.red) active.push('red');
+  if (state.green) active.push('green');
+  if (state.blue) active.push('blue');
+  if (state.red && state.green) active.push('yellow');
+  if (state.green && state.blue) active.push('cyan');
+  if (state.red && state.blue) active.push('purple');
+  if (state.red && state.green && state.blue) active.push('white');
+  return active;
 }
 
 function updateDots() {
-  for (const color in dots) {
-    dots[color].style.backgroundColor = '#333';
+  for (const c in dots) {
+    dots[c].style.backgroundColor = '#333';
   }
-
-  const activeColors = getActiveColors();
-  activeColors.forEach(color => {
-    dots[color].style.backgroundColor = color;
+  getActiveColors().forEach(c => {
+    dots[c].style.backgroundColor = c;
   });
 }
 
@@ -72,100 +70,76 @@ function updateDisplay() {
   updateDots();
 }
 
-// this checks if the current color combo matches the next color in the sequence
+// helper: exact button combo for each color
+function getComboFromColor(color) {
+  switch (color) {
+    case 'red':    return { red: true,  green: false, blue: false };
+    case 'green':  return { red: false, green: true,  blue: false };
+    case 'blue':   return { red: false, green: false, blue: true  };
+    case 'yellow': return { red: true,  green: true,  blue: false };
+    case 'cyan':   return { red: false, green: true,  blue: true  };
+    case 'purple': return { red: true,  green: false, blue: true  };
+    case 'white':  return { red: true,  green: true,  blue: true  };
+    default:       return { red: false, green: false, blue: false };
+  }
+}
+
+// check if current combo EXACTLY matches the expected color
 function updateTopRowDot() {
-  // get all active colors (single and combo)
-  const activeColors = getActiveColors();
+  const idx = state.markedColors.length;
+  if (idx >= state.sequence.length) return;
 
-  // figure out what step we're on in the sequence
-  const currentIndex = state.markedColors.length;
+  const expected = state.sequence[idx];
+  const combo = getComboFromColor(expected);
 
-  // get the color we're supposed to hit next
-  const expectedColor = state.sequence[currentIndex];
+  const isExactMatch =
+    state.red   === combo.red &&
+    state.green === combo.green &&
+    state.blue  === combo.blue;
 
-  // if we already finished the whole sequence, stop
-  if (currentIndex >= state.sequence.length) return;
-
-  // check if the current combo includes the expected color
-  if (activeColors.includes(expectedColor)) {
-    // grab the correct dot in the row
-    const dot = dots[expectedColor];
-
-    // light it up with the actual color
-    dot.style.backgroundColor = expectedColor;
-
-    // grab the little white line above the dot
+  if (isExactMatch) {
+    const dot = dots[expected];
     const mark = dot.querySelector('.mark');
-
-    // make the mark visible to show it's locked in
+    dot.style.backgroundColor = expected;
     mark.style.height = '10px';
-
-    // store that we got this color right
-    state.markedColors.push(expectedColor);
-
-    // update the message depending on whether we're done or not
+    state.markedColors.push(expected);
     message.textContent = state.markedColors.length === state.sequence.length
       ? "ok"
       : "";
   } else {
-    // if it's the wrong color, tell the user
     message.textContent = "hmmm...";
   }
 }
 
-// this gets called when i press red, green, or blue
 function toggleColor(colorKey) {
-  // flip the boolean for the color (on/off)
   state[colorKey] = !state[colorKey];
-
-  // update bulbs and color dot visuals
   updateDisplay();
-
-  // check if the current combo matches the next color in the sequence
   updateTopRowDot();
 }
 
-// clicking the red button toggles red
 redButton.addEventListener('click', () => toggleColor('red'));
-
-// clicking the green button toggles green
 greenButton.addEventListener('click', () => toggleColor('green'));
-
-// clicking the blue button toggles blue
 blueButton.addEventListener('click', () => toggleColor('blue'));
 
-// this animates the correct color order by lighting up each dot one at a time
+// “?” button: reset progress, then replay sequence
 document.getElementById('show-order-button').addEventListener('click', async () => {
-  // show this message while the animation plays
+  // reset state
+  state.red = state.green = state.blue = false;
+  state.markedColors = [];
+  updateDisplay();
+
   message.textContent = "watch closely...";
 
-  // go through the color sequence one by one
   for (let color of state.sequence) {
-    // grab the dot for this color
     const dot = dots[color];
-
-    // grab the white mark above it
     const mark = dot.querySelector('.mark');
-
-    // light up the dot
     dot.style.backgroundColor = color;
-
-    // make the mark show up
     mark.style.height = '10px';
-
-    // pause for half a second
     await new Promise(r => setTimeout(r, 500));
-
-    // turn the dot back off
     dot.style.backgroundColor = '#333';
-
-    // hide the mark again
     mark.style.height = '0';
   }
 
-  // restore whatever the current game state was
   updateDisplay();
-
-  // clear the message
   message.textContent = "";
 });
