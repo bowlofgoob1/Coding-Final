@@ -63,7 +63,7 @@ function updateDots() {
   getActiveColors().forEach(c => {
     dots[c].style.backgroundColor = c;
   });
-}
+} //this updates the dots based on the current state
 
 function updateDisplay() {
   updateButtons();
