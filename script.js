@@ -106,9 +106,9 @@ function updateTopRowDot() {
     message.textContent = state.markedColors.length === state.sequence.length
       ? "ok"
       : "";
-  } else {
+  } /*else {
     message.textContent = "hmmm...";
-  }
+  }*/
 }
 
 function toggleColor(colorKey) {
