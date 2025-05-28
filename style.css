@@ -25,7 +25,7 @@ body {
     text-align: center;
 }
   
-/* Remove or comment out the general button styling from earlier */
+
 /* button {
     padding: 1em 2em;
     background-color: #f7c59f;
@@ -162,14 +162,13 @@ button:hover {
 }
 
 
-/* ==== NEW ADDITIONS ==== */
 
-/* VHS‐style monitor wrapper – fluid scale, keeps aspect ratio, no cropping */
+/* VHS‐style monitor wrapper fluid scale, keeps aspect ratio, no cropping */
 .monitor-frame {
     position: relative;
-    width: 90vw;               /* scales with viewport */
-    max-width: 1200px;         /* prevents it from getting huge */
-    aspect-ratio: 4/3;         /* match your PNG’s own ratio */
+    width: 90vw;               
+    max-width: 1200px;         
+    aspect-ratio: 4/3;         
     margin: 0 auto;
     background: url('monitorframe.png') no-repeat center/contain;
     overflow: visible;         /* so the bezel never gets clipped */
@@ -178,7 +177,6 @@ button:hover {
     align-items: center;
 }
 
-/* inset your game content inside the screen area */
 .monitor-frame .game-container {
     position: relative;
     width: 85%;
