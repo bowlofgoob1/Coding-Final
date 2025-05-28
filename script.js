@@ -124,6 +124,7 @@ function updateTopRowDot() {
 }
 
 function toggleColor(colorKey) {
+  document.getElementById('beepSound').play();  // Button Sound
   state.totalClicks++;  // Increment click counter
   state[colorKey] = !state[colorKey];
   updateDisplay();
