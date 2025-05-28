@@ -107,7 +107,7 @@ function updateTopRowDot() {
     
     if (state.markedColors.length === state.sequence.length) {
       message.textContent = "ok";
-      document.getElementById('winSound').play();  // Add this line
+      document.getElementById('winSound').play();  // Sound
       // Reset everything after completion
       setTimeout(() => {
         state.markedColors = [];
