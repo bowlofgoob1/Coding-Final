@@ -166,23 +166,16 @@ button:hover {
 
 /* VHS‐style monitor wrapper – fluid scale, keeps aspect ratio, no cropping */
 .monitor-frame {
-  position: relative;
-
-  /* pick the smallest of:
-     – 1200px (your max design size)
-     – 90vw (90% of viewport width)
-     – calc(90vh * 4/3) (the width that would yield a 4:3 box at 90% viewport height)
-  */
-  width: min(1200px, 90vw, calc(90vh * (4/3)));
-  aspect-ratio: 4/3;
-
-  margin: 0 auto;
-  background: url('monitorframe.png') no-repeat center/contain;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: visible;  /* make sure no part of the bezel is clipped */
+    position: relative;
+    width: 90vw;               /* scales with viewport */
+    max-width: 1200px;         /* prevents it from getting huge */
+    aspect-ratio: 4/3;         /* match your PNG’s own ratio */
+    margin: 0 auto;
+    background: url('monitorframe.png') no-repeat center/contain;
+    overflow: visible;         /* so the bezel never gets clipped */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* inset your game content inside the screen area */

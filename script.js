@@ -91,7 +91,7 @@ function updateTopRowDot() {
   if (idx >= state.sequence.length) return;
 
   const expected = state.sequence[idx];
-  const combo = getComboFromColor(expected);
+  const combo    = getComboFromColor(expected);
 
   const isExactMatch =
     state.red   === combo.red &&
@@ -99,6 +99,9 @@ function updateTopRowDot() {
     state.blue  === combo.blue;
 
   if (isExactMatch) {
+    // they got it right—leave message blank
+    message.textContent = "";
+
     const dot = dots[expected];
     const mark = dot.querySelector('.mark');
     dot.style.backgroundColor = expected;
@@ -107,21 +110,47 @@ function updateTopRowDot() {
     
     if (state.markedColors.length === state.sequence.length) {
       message.textContent = "ok";
-      document.getElementById('winSound').play();  // Sound
-      // Reset everything after completion
+      document.getElementById('winSound').play();
       setTimeout(() => {
         state.markedColors = [];
-        state.red = state.green = state.blue = false;  // Reset button states
+        state.red = state.green = state.blue = false;
         Object.values(dots).forEach(dot => {
           dot.style.backgroundColor = '#333';
           dot.querySelector('.mark').style.height = '0';
         });
-        updateDisplay();  // Update the visual state
-        message.textContent = "";  // Clear the message
-      }, 1000);  // Changed from 500 to 1000 for 1 second
+        updateDisplay();
+        message.textContent = "";
+      }, 1000);
     }
+  } else {
+    // wrong combo—show the hmmm....
+    message.textContent = "hmmm....";
   }
 }
+
+function toggleColor(colorKey) {
+  // clear any prior feedback immediately on click
+  message.textContent = "";
+
+  document.getElementById('beepSound').play();  // Button Sound
+  state.totalClicks++;
+  state[colorKey] = !state[colorKey];
+  updateDisplay();
+  updateTopRowDot();
+
+  if (state.totalClicks === 7) {
+    state.totalClicks = 0;  // Reset counter
+    state.markedColors = [];
+    state.red = state.green = state.blue = false;
+    Object.values(dots).forEach(dot => {
+      dot.style.backgroundColor = '#333';
+      dot.querySelector('.mark').style.height = '0';
+    });
+    updateDisplay();
+  }
+}
+
+
 
 function toggleColor(colorKey) {
   document.getElementById('beepSound').play();  // Button Sound
