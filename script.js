@@ -17,7 +17,8 @@ const state = {
   blue: false,
   sequence: ['red', 'yellow', 'green', 'cyan', 'white', 'purple', 'blue'],
   markedColors: [],
-  prevActiveColor: null
+  prevActiveColor: null,
+  totalClicks: 0  // Add this line
 };
 
 const redButton = document.getElementById('red-button');
@@ -103,18 +104,40 @@ function updateTopRowDot() {
     dot.style.backgroundColor = expected;
     mark.style.height = '10px';
     state.markedColors.push(expected);
-    message.textContent = state.markedColors.length === state.sequence.length
-      ? "ok"
-      : "";
-  } /*else {
-    message.textContent = "hmmm...";
-  }*/
+    
+    if (state.markedColors.length === state.sequence.length) {
+      message.textContent = "ok";
+      // Reset everything after completion
+      setTimeout(() => {
+        state.markedColors = [];
+        state.red = state.green = state.blue = false;  // Reset button states
+        Object.values(dots).forEach(dot => {
+          dot.style.backgroundColor = '#333';
+          dot.querySelector('.mark').style.height = '0';
+        });
+        updateDisplay();  // Update the visual state
+        message.textContent = "";  // Clear the message
+      }, 1000);  // Changed from 500 to 1000 for 1 second
+    }
+  }
 }
 
 function toggleColor(colorKey) {
+  state.totalClicks++;  // Increment click counter
   state[colorKey] = !state[colorKey];
   updateDisplay();
   updateTopRowDot();
+
+  if (state.totalClicks === 7) {
+    state.totalClicks = 0;  // Reset counter
+    state.markedColors = [];
+    state.red = state.green = state.blue = false;
+    Object.values(dots).forEach(dot => {
+      dot.style.backgroundColor = '#333';
+      dot.querySelector('.mark').style.height = '0';
+    });
+    updateDisplay();
+  }
 }
 
 redButton.addEventListener('click', () => toggleColor('red'));
