@@ -4,61 +4,59 @@ body {
     color: #333;
     text-align: center;
     padding: 50px;
-  }
+}
   
-  button {
+button {
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
-  }
-  body {
-  background-color: black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-  font-family: Arial, sans-serif;
 }
-
+body {
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
   
-  .container {
+.container {
     text-align: center;
-  }
+}
   
-  /* Remove or comment out the general button styling from earlier */
-  /* button {
-      padding: 1em 2em;
-      background-color: #f7c59f;
-      border: none;
-      color: #012B2B;
-      font-size: 1.2rem;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-  } */
+/* Remove or comment out the general button styling from earlier */
+/* button {
+    padding: 1em 2em;
+    background-color: #f7c59f;
+    border: none;
+    color: #012B2B;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+} */
   
-  button:hover {
+button:hover {
     background-color: #f3a35c;
-  }
+}
   
-  .hidden {
+.hidden {
     display: none;
-  }
+}
   
-  #loadingText {
+#loadingText {
     margin-top: 20px;
     font-size: 1.5rem;
     animation: blink 2s infinite;
-  }
-  /*built in css animation for blinking text*/
-  @keyframes blink {
+}
+/*built in css animation for blinking text*/
+@keyframes blink {
     0%, 100% { opacity: 0; }
     50% { opacity: 1; }
-  }
+}
   
-
-  /* ---------------------------------- */
-  /* Basic page setup */
+/* ---------------------------------- */
+/* Basic page setup */
 
 .game-container {
     display: flex;
@@ -139,35 +137,7 @@ body {
     text-align: center;
 }
 
-/* Background glow effects */
-.glow {
-    position: fixed;
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    filter: blur(120px);
-    opacity: 0.2;
-    z-index: -1; /* Behind everything else */
-}
-
-.red-glow {
-    bottom: -100px;
-    left: 0;
-    background-color: red;
-}
-
-.green-glow {
-    bottom: -100px;
-    right: 0;
-    background-color: green;
-}
-
-.blue-glow {
-    top: 0;
-    left: 0;
-    background-color: blue;
-}
-
+/* Show-sequence button */
 #show-order-button {
     width: 70px;
     height: 70px;
@@ -192,3 +162,71 @@ body {
 }
 
 
+/* ==== NEW ADDITIONS ==== */
+
+/* VHS‐style monitor wrapper – fluid scale, keeps aspect ratio, no cropping */
+.monitor-frame {
+  position: relative;
+
+  /* pick the smallest of:
+     – 1200px (your max design size)
+     – 90vw (90% of viewport width)
+     – calc(90vh * 4/3) (the width that would yield a 4:3 box at 90% viewport height)
+  */
+  width: min(1200px, 90vw, calc(90vh * (4/3)));
+  aspect-ratio: 4/3;
+
+  margin: 0 auto;
+  background: url('monitorframe.png') no-repeat center/contain;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible;  /* make sure no part of the bezel is clipped */
+}
+
+/* inset your game content inside the screen area */
+.monitor-frame .game-container {
+    position: relative;
+    width: 85%;
+    height: 80%;
+    z-index: 1;
+
+    /* center everything inside the screen */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+}
+
+
+/* glowing lights behind the game */
+.glow {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.2;
+    z-index: 0;
+}
+
+.red-glow {
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: red;
+}
+
+.blue-glow {
+    bottom: 20px;
+    left: 20px;
+    background-color: blue;
+}
+
+.green-glow {
+    bottom: 20px;
+    right: 20px;
+    background-color: green;
+}
